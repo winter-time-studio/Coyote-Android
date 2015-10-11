@@ -7,35 +7,42 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnItemClick;
 
 public class MainActivity extends AppCompatActivity {
+
+    @Bind(R.id.listView)
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // ActionBarの設定
-        if (savedInstanceState == null) {
-             //getSupportFragmentManager().beginTransaction().add(R.id.fragment, new MainActivityFragment()).commit();
+        ButterKnife.bind(this);
+        setCustomActionBar();
 
+        ProfileList pl = new ProfileList();
+        String[] profileData = pl.getProfileData();
 
-            // customActionBarの取得
-            View customActionBarView = this.getActionBarView("Hoge", "表示する画像のURL");
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_expandable_list_item_1, profileData);
 
-            // ActionBarの取得
-            ActionBar actionBar = this.getSupportActionBar();
+        listView.setAdapter(adapter);
 
-            // タイトルを表示するか
-            actionBar.setDisplayShowTitleEnabled(true);
-            // iconを表示するか
-            actionBar.setDisplayShowHomeEnabled(false);
-
-            actionBar.setCustomView(customActionBarView);
-            actionBar.setDisplayShowCustomEnabled(true);
-        }
     }
 
+    @OnItemClick(R.id.listView)
+    public void onListItemClick(int position) {
+        Toast.makeText(this, "selected pos=" + position, Toast.LENGTH_SHORT).show();
+    }
 
     private View getActionBarView(String title, String imageURL) {
 
@@ -45,13 +52,29 @@ public class MainActivity extends AppCompatActivity {
 
         // CustomViewにクリックイベントを登録する
         final MainActivity self = this;
-        view.setOnClickListener(new View.OnClickListener() {
+        view.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                self.finish();
+                //self.finish();
+                //TODO: Profile詳細を実装
+                Toast.makeText(self, "profile", Toast.LENGTH_SHORT).show();
             }
         });
         return view;
+    }
+
+    private void setCustomActionBar(){
+        // customActionBarの取得
+        View customActionBarView = this.getActionBarView("Hoge", "表示する画像のURL");
+        // ActionBarの取得
+        ActionBar actionBar = this.getSupportActionBar();
+        // タイトルを表示するか
+        actionBar.setDisplayShowTitleEnabled(true);
+        // iconを表示するか
+        actionBar.setDisplayShowHomeEnabled(false);
+
+        actionBar.setCustomView(customActionBarView);
+        actionBar.setDisplayShowCustomEnabled(true);
     }
 
     @Override

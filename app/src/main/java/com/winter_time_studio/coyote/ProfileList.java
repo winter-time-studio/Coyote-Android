@@ -6,5 +6,10 @@ package com.winter_time_studio.coyote;
 public class ProfileList {
 
     //TODO: API経由でjsonで取得する
-    public static final String[] Data = { "A", "B", "C", "D"};
+    private String[] profileData = { "A", "B", "C", "D"};
+
+    public String[] getProfileData(){
+        return profileData;
+    }
+
 }
