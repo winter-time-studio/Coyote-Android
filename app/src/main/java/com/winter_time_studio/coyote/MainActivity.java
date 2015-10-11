@@ -17,6 +17,9 @@ public class MainActivity extends AppCompatActivity {
 
         // ActionBarの設定
         if (savedInstanceState == null) {
+             //getSupportFragmentManager().beginTransaction().add(R.id.fragment, new MainActivityFragment()).commit();
+
+
             // customActionBarの取得
             View customActionBarView = this.getActionBarView("Hoge", "表示する画像のURL");
 
